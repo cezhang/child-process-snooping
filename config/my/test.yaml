@@ -1,0 +1,17 @@
+apiVersion: childprocess.cezhang/v1
+kind: Childprocess
+metadata:
+  creationTimestamp: null
+  labels:
+    run: aa
+  name: mpod
+spec:
+  tpod: demo-997c454df-2t57t
+  mpod:
+    containers:
+      - image: nginx
+        name: aa
+        resources: {}
+    dnsPolicy: ClusterFirst
+    restartPolicy: Always
+status: {}

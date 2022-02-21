@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: "n"
+  name: "n"
+spec:
+  containers:
+  - image: nginx
+    name: "n"
+    resources: {}
+  - image: nginx
+    name: "n1"
+    resources: { }
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}

@@ -1,0 +1,24 @@
+# permissions for end users to edit childprocesses.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: childprocess-editor-role
+rules:
+- apiGroups:
+  - childprocess.cezhang
+  resources:
+  - childprocesses
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - childprocess.cezhang
+  resources:
+  - childprocesses/status
+  verbs:
+  - get

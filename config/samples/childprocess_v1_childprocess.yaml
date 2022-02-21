@@ -1,0 +1,6 @@
+apiVersion: childprocess.cezhang/v1
+kind: Childprocess
+metadata:
+  name: childprocess-sample
+spec:
+  # TODO(user): Add fields here

@@ -1,0 +1,16 @@
+domain: cezhang
+layout:
+- go.kubebuilder.io/v3
+projectName: childprocess
+repo: cezhang/childprocess
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: cezhang
+  group: childprocess
+  kind: Childprocess
+  path: cezhang/childprocess/api/v1
+  version: v1
+version: "3"
