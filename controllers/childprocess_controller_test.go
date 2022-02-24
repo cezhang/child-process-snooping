@@ -29,7 +29,6 @@ import (
 	"context"
 	"fmt"
 	ctrl "sigs.k8s.io/controller-runtime"
-	"sigs.k8s.io/controller-runtime/pkg/client"
 	"time"
 
 	. "github.com/onsi/ginkgo"
@@ -37,7 +36,6 @@ import (
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
-
 )
 
 // +kubebuilder:docs-gen:collapse=Imports
@@ -57,7 +55,7 @@ var _ = Describe("Childprocess controller", func() {
 		CPName      = "test-cp"
 		CPNamespace = "default"
 		TPOD 		= "tpod"
-		timeout  = time.Second * 60
+		timeout  = time.Second * 10
 		duration = time.Second * 10
 		interval = time.Second * 3
 	)
@@ -86,23 +84,31 @@ var _ = Describe("Childprocess controller", func() {
 						},
 					},
 				},
+				Status: v1.PodStatus{
+					Phase: v1.PodRunning,
+				},
+
 			}
 
 			Expect(k8sClient.Create(ctx, &tpod)).Should(Succeed())
-			Eventually(func() bool {
-				etpod := &v1.Pod{}
-				key := client.ObjectKey{Namespace: CPNamespace, Name: TPOD}
-				err := k8sClient.Get(ctx, key, etpod)
-				if err != nil {
-					return false
-				}
-				fmt.Println("etpod:", etpod.Status.Phase)
-				if etpod.Status.Phase == v1.PodRunning {
-					return true
-				}else{
-					return false
-				}
-			}, timeout, interval).Should(BeTrue())
+			//Eventually(func() bool {
+			//	etpod := &v1.Pod{}
+			//	key := client.ObjectKey{Namespace: CPNamespace, Name: TPOD}
+			//	err := k8sClient.Get(ctx, key, etpod)
+			//	//var events v1.EventList
+			//	//k8sClient.List(ctx, &events, client.InNamespace(CPNamespace))
+			//	//fmt.Println(events)
+			//	if err != nil {
+			//		return false
+			//	}
+			//	fmt.Println(etpod)
+			//	fmt.Println("etpod:", etpod.Status.Phase)
+			//	if etpod.Status.Phase == v1.PodRunning {
+			//		return true
+			//	}else{
+			//		return false
+			//	}
+			//}, timeout, interval).Should(BeTrue())
 
 
 
@@ -157,15 +163,15 @@ var _ = Describe("Childprocess controller", func() {
 			Expect(cp.Spec.Tpod).Should(Equal(TPOD))
 
 
-			createdCP1 := &childprocessv1.Childprocess{}
-			Eventually(func() bool {
-				err := k8sClient.Get(ctx, cpLookupKey, createdCP1)
-				fmt.Println("createdCP1", createdCP1)
-				if err != nil {
-					return false
-				}
-				return true
-			}, timeout, interval).Should(BeTrue())
+			//createdCP1 := &childprocessv1.Childprocess{}
+			//Eventually(func() bool {
+			//	err := k8sClient.Get(ctx, cpLookupKey, createdCP1)
+			//	fmt.Println("createdCP1", createdCP1)
+			//	if err != nil {
+			//		return false
+			//	}
+			//	return true
+			//}, timeout, interval).Should(BeTrue())
 			//Expect(cp.Status.Mpod).Should(Equal(TPOD+"-mpod"))
 
 		})

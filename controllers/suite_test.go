@@ -21,6 +21,7 @@ import (
 	"path/filepath"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"testing"
+	"time"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -102,5 +103,12 @@ var _ = BeforeSuite(func() {
 var _ = AfterSuite(func() {
 	By("tearing down the test environment")
 	err := testEnv.Stop()
+
+	// bug in this version, https://github.com/kubernetes-sigs/controller-runtime/issues/1571
+	// Set 4 with random
+	if err != nil {
+		time.Sleep(4 * time.Second)
+	}
+	err = testEnv.Stop()
 	Expect(err).NotTo(HaveOccurred())
 })
